@@ -42,7 +42,7 @@ jobs:
 #        dockerfile: /product-service/Dockerfile
 #        username: ${{secrets.DOCKER_USERNAME}}
 #        password: ${{secrets.DOCKER_PASSWORD}}
-jobs:
+
   docker:
     runs-on: ubuntu-latest
     steps:
