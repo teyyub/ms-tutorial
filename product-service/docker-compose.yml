@@ -1,0 +1,31 @@
+version: "3.8"
+
+services:
+  ms-db:
+    image: postgres
+    container_name: ms-tutorial-db
+    restart: always
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=1234
+      - POSTGRES_DB=product-service
+    ports:
+      - '5439:5432'
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+  app:
+    container_name: ms-tutorial-app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '8081:8080'
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://ms-db:5432/product-service
+      - SPRING_DATASOURCE_USERNAME=admin
+      - SPRING_DATASOURCE_PASSWORD=1234
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    depends_on:
+      - ms-db
+volumes:
+  postgres-data:
